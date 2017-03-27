@@ -1,4 +1,4 @@
-package com.itruschina.ras.shiro.filter;
+package com.imiku.blog.shiro;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

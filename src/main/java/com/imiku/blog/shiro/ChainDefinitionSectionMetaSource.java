@@ -1,14 +1,13 @@
-package com.itruschina.ras.shiro.filter;
+package com.imiku.blog.shiro;
 
-import java.util.List;
-
+import com.imiku.blog.model.ResourcesInfo;
+import com.imiku.blog.service.ResourcesInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.config.Ini;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.itruschina.ras.service.ResourcesService;
-import com.itruschina.ras.vo.Resources;
+import java.util.List;
 
 /**
  * 产生责任链，确定每个url的访问权限
@@ -18,7 +17,7 @@ import com.itruschina.ras.vo.Resources;
 public class ChainDefinitionSectionMetaSource implements FactoryBean {
 
 	@Autowired
-	private ResourcesService resourcesService;
+	private ResourcesInfoService resourcesInfoService;
 
 	// 静态资源访问权限
 	private String filterChainDefinitions = null;
@@ -31,16 +30,16 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean {
 		Ini.Section section = ini.getSection(Ini.DEFAULT_SECTION_NAME);
 		// 循环Resource的url,逐个添加到section中。section就是filterChainDefinitionMap,
 		// 里面的键就是链接URL,值就是存在什么条件才能访问该链接
-		List<Resources> lists = resourcesService.findAllResources();
-		for (Resources resources : lists) {
+		List<ResourcesInfo> lists = resourcesInfoService.findAllResources();
+		for (ResourcesInfo resourcesInfo : lists) {
 			// 构成permission字符串
-			if (StringUtils.isNotEmpty(resources.getResUri() + "") && StringUtils.isNotEmpty(resources.getResKey() + "")) {
-				String permission = "perms[" + resources.getResKey() + "]";
+			if (StringUtils.isNotEmpty(resourcesInfo.getResUrl() + "") && StringUtils.isNotEmpty(resourcesInfo.getResKey() + "")) {
+				String permission = "perms[" + resourcesInfo.getResKey() + "]";
 				// 不对角色进行权限验证
 //				 如需要则 permission = "roles[" + resources.getResKey() + "]";
 //				String permission = "roles[" + resources.getResKey() + "]";
 				System.out.println(permission);
-				section.put(resources.getResUri() + "/**", permission);
+				section.put(resourcesInfo.getResUrl() + "/**", permission);
 			}
 
 		}

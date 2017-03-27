@@ -8,7 +8,7 @@
 	<description>apache shiro配置</description>
 
 	<bean id="credentialsMatcher"
-		class="com.itruschina.ras.shiro.filter.RetryLimitHashedCredentialsMatcher">
+		class="com.imiku.blog.shiro.RetryLimitHashedCredentialsMatcher">
 		<!-- hashAlgorithmName必须的，没有默认值。可以有MD5或者SHA-1，如果对密码安全有更高要求可以用SHA-256或者更高。 
 			这里使用MD5 storedCredentialsHexEncoded默认是true，此时用的是密码加密用的是Hex编码；false时用Base64编码 
 			hashIterations迭代次数，默认值是1。 -->
@@ -26,7 +26,7 @@
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 	<!--自定义Realm -->
-	<bean id="myRealm" class="com.itruschina.ras.shiro.filter.MyRealm">
+	<bean id="myRealm" class="com.imiku.blog.shiro.MyRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
 		<property name="cachingEnabled" value="true" />
 		<!-- 如需要自定义缓存时间放开以下.修改 ehcache.xml -->
@@ -36,7 +36,7 @@
 		<property name="authorizationCacheName" value="authorizationCache" />
 	</bean>
 
-	<bean id="sysUserFilter" class="com.itruschina.ras.shiro.filter.SysUserFilter" />
+	<bean id="sysUserFilter" class="com.imiku.blog.shiro.SysUserFilter" />
 
 	<bean id="captchaEngine" class="com.itruschina.ras.util.CaptchaEngine">
 		<property name="base" value="0123456789" />
@@ -44,7 +44,7 @@
 
 	<!-- 控制并发人数 -->
 	<bean id="kickoutSessionControlFilter"
-		class="com.itruschina.ras.shiro.filter.KickoutSessionControlFilter">
+		class="com.imiku.blog.shiro.KickoutSessionControlFilter">
 		<!-- cacheManager：使用cacheManager获取相应的cache来缓存用户登录的会话；用于保存用户—会话之间的关系的； -->
 		<property name="cacheManager" ref="cacheManager" />
 		<!-- sessionManager：用于根据会话ID，获取会话进行踢出操作的； -->
@@ -75,7 +75,7 @@
 	</bean>
 	<!--自定义filterChainDefinitionMap -->
 	<bean id="chainDefinitionSectionMetaSource"
-		class="com.itruschina.ras.shiro.filter.ChainDefinitionSectionMetaSource">
+		class="com.imiku.yuxh.shiro.ChainDefinitionSectionMetaSource">
 		<property name="filterChainDefinitions">
 			<value>
 				/login = anon
@@ -140,7 +140,7 @@
 
 	<!--shiro缓存管理器 -->
 	<bean id="cacheManager"
-		class="com.itruschina.ras.shiro.filter.SpringCacheManagerWrapper">
+		class="com.imiku.blog.shiro.SpringCacheManagerWrapper">
 		<property name="cacheManager" ref="springCacheManager" />
 	</bean>
 

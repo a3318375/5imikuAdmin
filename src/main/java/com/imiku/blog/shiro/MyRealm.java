@@ -1,9 +1,15 @@
-package com.itruschina.ras.shiro.filter;
+package com.imiku.blog.shiro;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.imiku.blog.model.ResourcesInfo;
+import com.imiku.blog.model.RoleInfo;
+import com.imiku.blog.model.UserInfo;
+import com.imiku.blog.service.ResourcesInfoService;
+import com.imiku.blog.service.RoleInfoService;
+import com.imiku.blog.service.UserInfoService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -19,14 +25,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.itruschina.ras.service.ResourcesService;
-import com.itruschina.ras.service.RoleInfoService;
-import com.itruschina.ras.service.UserService;
-import com.itruschina.ras.util.ResourcesUtils;
-import com.itruschina.ras.vo.Resources;
-import com.itruschina.ras.vo.RoleInfo;
-import com.itruschina.ras.vo.User;
-
 /**
  * 自定义Realm,进行数据源配置
  * 
@@ -37,13 +35,13 @@ import com.itruschina.ras.vo.User;
 public class MyRealm extends AuthorizingRealm {
 
 	@Autowired
-	private ResourcesService resourcesService;
+	private ResourcesInfoService resourcesInfoService;
 
 	@Autowired
 	private RoleInfoService roleInfoService;
 	
 	@Autowired
-	private UserService userService;
+	private UserInfoService userInfoService;
 
 	/**
 	 * 只有需要验证权限时才会调用, 授权查询回调函数, 进行鉴权但缓存中无用户的授权信息时调用.在配有缓存的情况下，只加载一次.
@@ -54,10 +52,8 @@ public class MyRealm extends AuthorizingRealm {
 		if (loginName != null) {
 			String userId = SecurityUtils.getSubject().getSession().getAttribute("userSessionId").toString();
 			Map<String,Object> map = new HashMap<>();
-			map.put("userId", userId);
-			List<RoleInfo> rolelist = roleInfoService.findRoleByUserId(map);
-			map.put("rolelist", rolelist);
-			List<Resources> res = resourcesService.findRoleResourcess(map);
+			List<RoleInfo> rolelist = roleInfoService.findRoleByUserId(userId);
+			List<ResourcesInfo> res = resourcesInfoService.findRoleResourcess(rolelist);
 			// 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 			// 用户的角色集合
@@ -65,7 +61,7 @@ public class MyRealm extends AuthorizingRealm {
 			// 用户的角色集合
 			// info.setRoles(user.getRolesName());
 			// 用户的角色对应的所有权限，如果只使用角色定义访问权限
-			for (Resources resources : res) {
+			for (ResourcesInfo resources : res) {
 				info.addStringPermission(resources.getResKey().toString());
 			}
 //			clearCachedAuthorizationInfo(principalCollection);
@@ -86,9 +82,7 @@ public class MyRealm extends AuthorizingRealm {
 	 */
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		String username = (String) token.getPrincipal();
-		Map<String,Object> map = new HashMap<>();
-		map.put("accountName", username);
-		List<User> list = userService.findByNames(map);
+		List<UserInfo> list = userInfoService.findByNames(username);
 		if (list.size() != 0) {
 			if ("0".equals(list.get(0).getLocked())) {
 				throw new LockedAccountException(); // 帐号锁定
@@ -107,11 +101,9 @@ public class MyRealm extends AuthorizingRealm {
 			Session session = SecurityUtils.getSubject().getSession();
 			session.setAttribute("userSession", list.get(0));
 			session.setAttribute("userSessionId", list.get(0).getUserId());
-			map.put("userId", list.get(0).getUserId());
-			List<RoleInfo> rolelist = roleInfoService.findRoleByUserId(map);
-			map.put("rolelist", rolelist);
-			List<Resources> resList = resourcesService.findRoleResourcess(map);
-			resList = ResourcesUtils.listToMap(resList);
+			List<RoleInfo> rolelist = roleInfoService.findRoleByUserId(null);  //TODO
+			List<ResourcesInfo> resList = resourcesInfoService.findRoleResourcess(rolelist);
+			//resList = ResourcesUtils.listToMap(resList);
 			session.setAttribute("resList", resList);
 			return authenticationInfo;
 		} else {

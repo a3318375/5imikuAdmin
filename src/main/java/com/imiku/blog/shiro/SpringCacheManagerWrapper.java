@@ -2,7 +2,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package com.itruschina.ras.shiro.filter;
+package com.imiku.blog.shiro;
 
 import net.sf.ehcache.Ehcache;
 import org.apache.shiro.cache.Cache;

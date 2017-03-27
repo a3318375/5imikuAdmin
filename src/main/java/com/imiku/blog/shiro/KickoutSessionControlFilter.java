@@ -1,4 +1,4 @@
-package com.itruschina.ras.shiro.filter;
+package com.imiku.blog.shiro;
 
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;

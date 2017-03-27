@@ -8,15 +8,14 @@ apply plugin: 'war'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+repositories{
+    maven{ url"http://maven.aliyun.com/nexus/content/groups/public"}
 }
 
 configurations {
     mybatisGenerator
 }
 
-ext{
     def prop = new Properties();
     file("src/main/resources/properties/jdbc.properties")
             .withInputStream {
@@ -29,7 +28,7 @@ ext{
     prop.each {
         project.extensions.add("$it.key",it.value);
     }
-}
+
 
 dependencies {
     compile 'org.apache.tomcat:tomcat-servlet-api:8.0.24'
