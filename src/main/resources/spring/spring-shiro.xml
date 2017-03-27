@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<description>apache shiro配置</description>
+
+	<bean id="credentialsMatcher"
+		class="com.itruschina.ras.shiro.filter.RetryLimitHashedCredentialsMatcher">
+		<!-- hashAlgorithmName必须的，没有默认值。可以有MD5或者SHA-1，如果对密码安全有更高要求可以用SHA-256或者更高。 
+			这里使用MD5 storedCredentialsHexEncoded默认是true，此时用的是密码加密用的是Hex编码；false时用Base64编码 
+			hashIterations迭代次数，默认值是1。 -->
+		<constructor-arg ref="cacheManager" />
+		<property name="hashAlgorithmName" value="SHA-256" />
+		<property name="hashIterations" value="2" />
+		<property name="storedCredentialsHexEncoded" value="true" />
+	</bean>
+
+	<!-- 凭证匹配器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="myRealm" />
+		<property name="sessionManager" ref="sessionManager" />
+		<!-- 使用下面配置的缓存管理器 -->
+		<property name="cacheManager" ref="cacheManager" />
+	</bean>
+	<!--自定义Realm -->
+	<bean id="myRealm" class="com.itruschina.ras.shiro.filter.MyRealm">
+		<property name="credentialsMatcher" ref="credentialsMatcher" />
+		<property name="cachingEnabled" value="true" />
+		<!-- 如需要自定义缓存时间放开以下.修改 ehcache.xml -->
+		<!-- <property name="authenticationCachingEnabled" value="true"/> -->
+		<!-- <property name="authenticationCacheName" value="authenticationCache"/> -->
+		<property name="authorizationCachingEnabled" value="true" />
+		<property name="authorizationCacheName" value="authorizationCache" />
+	</bean>
+
+	<bean id="sysUserFilter" class="com.itruschina.ras.shiro.filter.SysUserFilter" />
+
+	<bean id="captchaEngine" class="com.itruschina.ras.util.CaptchaEngine">
+		<property name="base" value="0123456789" />
+	</bean>
+
+	<!-- 控制并发人数 -->
+	<bean id="kickoutSessionControlFilter"
+		class="com.itruschina.ras.shiro.filter.KickoutSessionControlFilter">
+		<!-- cacheManager：使用cacheManager获取相应的cache来缓存用户登录的会话；用于保存用户—会话之间的关系的； -->
+		<property name="cacheManager" ref="cacheManager" />
+		<!-- sessionManager：用于根据会话ID，获取会话进行踢出操作的； -->
+		<property name="sessionManager" ref="sessionManager" />
+		<!-- kickoutAfter：是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户； -->
+		<property name="kickoutAfter" value="false" />
+		<!-- maxSession：同一个用户最大的会话数，默认1；比如2的意思是同一个用户允许最多同时两个人登录； -->
+		<property name="maxSession" value="1" />
+		<!--kickoutUrl：被踢出后重定向到的地址； -->
+		<property name="kickoutUrl" value="login" />
+	</bean>
+
+
+	<!-- 配置shiro的过滤器工厂类，id- shiroFilter要和我们在web.xml中配置的过滤器一致 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login" />
+		<property name="successUrl" value="/index" />
+		<property name="unauthorizedUrl" value="/index" />
+		<!-- 自定义权限配置 -->
+		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
+		<property name="filters">
+			<util:map>
+				<entry key="sysUser" value-ref="sysUserFilter" />
+				<entry key="kickout" value-ref="kickoutSessionControlFilter" />
+			</util:map>
+		</property>
+	</bean>
+	<!--自定义filterChainDefinitionMap -->
+	<bean id="chainDefinitionSectionMetaSource"
+		class="com.itruschina.ras.shiro.filter.ChainDefinitionSectionMetaSource">
+		<property name="filterChainDefinitions">
+			<value>
+				/login = anon
+				/jcaptcha.jpg = anon
+				/resources/** = anon
+				/common/** = anon
+				/apis/** = anon
+				/aplis/** = anon
+				/pro/create = anon
+				/bank/**=anon
+				/cbank/**=anon
+				/pbank/**=anon
+				/testbank/**=anon
+				/authen/**=anon
+				/porc/**=anon
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="sessionIdGenerator"
+		class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
+
+	<!-- 会话DAO -->
+	<bean id="sessionDAO"
+		class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+		<property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
+		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
+	</bean>
+
+
+	<!-- 会话验证调度器 -->
+	<!-- 全局的会话信息检测扫描信息间隔30分钟 -->
+	<bean id="sessionValidationScheduler"
+		class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
+		<property name="sessionValidationInterval" value="1800000" />
+		<property name="sessionManager" ref="sessionManager" />
+	</bean>
+
+	<!-- 会话管理器 -->
+	<!-- 全局的会话信息设置成30分钟,sessionValidationSchedulerEnabled参数就是是否开启扫描 -->
+	<bean id="sessionManager"
+		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="sessionIdCookieEnabled" value="true"/>
+		<property name="sessionIdCookie" ref="sessionIdCookie"/>
+		<property name="globalSessionTimeout" value="1800000" />
+		<property name="deleteInvalidSessions" value="true" />
+		<property name="sessionValidationSchedulerEnabled" value="true" />
+		<property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
+		<property name="sessionDAO" ref="sessionDAO" />
+	</bean>
+	
+	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="sid"/>
+        <property name="name" value="JSID" />
+    </bean>
+
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+
+	<!--shiro缓存管理器 -->
+	<bean id="cacheManager"
+		class="com.itruschina.ras.shiro.filter.SpringCacheManagerWrapper">
+		<property name="cacheManager" ref="springCacheManager" />
+	</bean>
+
+	<bean id="springCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehcacheManager" />
+	</bean>
+
+	<!--ehcache -->
+	<bean id="ehcacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache.xml" />
+	</bean>
+
+
+	<!-- Shiro生命周期处理器 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+</beans>
