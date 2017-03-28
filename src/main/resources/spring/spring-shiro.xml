@@ -38,7 +38,7 @@
 
 	<bean id="sysUserFilter" class="com.imiku.blog.shiro.SysUserFilter" />
 
-	<bean id="captchaEngine" class="com.itruschina.ras.util.CaptchaEngine">
+	<bean id="captchaEngine" class="com.imiku.blog.shiro.CaptchaEngine">
 		<property name="base" value="0123456789" />
 	</bean>
 
@@ -75,7 +75,7 @@
 	</bean>
 	<!--自定义filterChainDefinitionMap -->
 	<bean id="chainDefinitionSectionMetaSource"
-		class="com.imiku.yuxh.shiro.ChainDefinitionSectionMetaSource">
+		class="com.imiku.blog.shiro.ChainDefinitionSectionMetaSource">
 		<property name="filterChainDefinitions">
 			<value>
 				/login = anon
