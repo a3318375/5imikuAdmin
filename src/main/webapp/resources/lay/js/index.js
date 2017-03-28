@@ -11,7 +11,7 @@ layui.define(['element', 'layer', 'form'], function (exports) {
     var $ = layui.jquery;
     //自定义验证
     form.verify({
-        passWord: [/^[\S]{6,12}$/, '密码必须6到12位'],
+        passWord: [/^[\S]{1,12}$/, '密码必须6到12位'],
         account: function (value) {
             if (value.length <= 0 || value.length > 10) {
                 return "账号必须1到10位"
@@ -30,7 +30,8 @@ layui.define(['element', 'layer', 'form'], function (exports) {
     //监听登陆提交
     form.on('submit(login)', function (data) {
         var index = layer.load(1);
-        setTimeout(function () {
+        $("#myform").submit();
+        /*setTimeout(function () {
             //模拟登陆
             layer.close(index);
             if (data.field.account != 'lyblogscn' || data.field.password != '111111') {
@@ -42,7 +43,7 @@ layui.define(['element', 'layer', 'form'], function (exports) {
                     location.href = "../html/main.html";
                 }, 1000);
             }
-        }, 400);
+        }, 400);*/
         return false;
     });
     //检测键盘按下
@@ -61,23 +62,23 @@ layui.define(['element', 'layer', 'form'], function (exports) {
     function login() {
         var loginHtml = ''; //静态页面只能拼接，这里可以用iFrame或者Ajax请求分部视图。html文件夹下有login.html
 
-        loginHtml += '<form class="layui-form" action="">';
+        loginHtml += '<form class="layui-form" id="myform" action="/login">';
         loginHtml += '<div class="layui-form-item">';
         loginHtml += '<label class="layui-form-label">账号</label>';
         loginHtml += '<div class="layui-input-inline pm-login-input">';
-        loginHtml += '<input type="text" name="account" lay-verify="account" placeholder="请输入账号" value="lyblogscn" autocomplete="off" class="layui-input">';
+        loginHtml += '<input type="text" name="username" lay-verify="account" placeholder="请输入账号" value="admin" autocomplete="off" class="layui-input">';
         loginHtml += '</div>';
         loginHtml += '</div>';
         loginHtml += '<div class="layui-form-item">';
         loginHtml += '<label class="layui-form-label">密码</label>';
         loginHtml += '<div class="layui-input-inline pm-login-input">';
-        loginHtml += '<input type="password" name="password" lay-verify="passWord" placeholder="请输入密码" value="111111" autocomplete="off" class="layui-input">';
+        loginHtml += '<input type="password" name="password" lay-verify="passWord" placeholder="请输入密码" value="123" autocomplete="off" class="layui-input">';
         loginHtml += '</div>';
         loginHtml += '</div>';
         loginHtml += '<div class="layui-form-item">';
         loginHtml += '<label class="layui-form-label">人机验证</label>';
         loginHtml += '<div class="layui-input-inline pm-login-input">';
-        loginHtml += '<input type="text" name="result_response" placeholder="人机验证，百度螺丝帽" value="" autocomplete="off" class="layui-input">';
+        loginHtml += '<div class="l-captcha" data-site-key="144341d26670c10455f58f8f04e40791"></div>';
         loginHtml += '</div>';
         loginHtml += '</div>';
         loginHtml += '<div class="layui-form-item" style="margin-top:25px;margin-bottom:0;">';

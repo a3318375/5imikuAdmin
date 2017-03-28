@@ -38,10 +38,6 @@
 
 	<bean id="sysUserFilter" class="com.imiku.blog.shiro.SysUserFilter" />
 
-	<bean id="captchaEngine" class="com.imiku.blog.shiro.CaptchaEngine">
-		<property name="base" value="0123456789" />
-	</bean>
-
 	<!-- 控制并发人数 -->
 	<bean id="kickoutSessionControlFilter"
 		class="com.imiku.blog.shiro.KickoutSessionControlFilter">

@@ -8,5 +8,5 @@ import java.util.List;
  * Created by yuxh on 2017/3/28.
  */
 public interface RoleInfoService {
-    List<RoleInfo> findRoleByUserId(String userId);
+    List<RoleInfo> findRoleByUserId(int userId);
 }

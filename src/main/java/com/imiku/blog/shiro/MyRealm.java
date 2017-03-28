@@ -25,6 +25,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
+
 /**
  * 自定义Realm,进行数据源配置
  * 
@@ -50,7 +52,7 @@ public class MyRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 		String loginName = SecurityUtils.getSubject().getPrincipal().toString();
 		if (loginName != null) {
-			String userId = SecurityUtils.getSubject().getSession().getAttribute("userSessionId").toString();
+			int userId = Integer.parseInt(SecurityUtils.getSubject().getSession().getAttribute("userSessionId").toString());
 			Map<String,Object> map = new HashMap<>();
 			List<RoleInfo> rolelist = roleInfoService.findRoleByUserId(userId);
 			List<ResourcesInfo> res = resourcesInfoService.findRoleResourcess(rolelist);
@@ -101,10 +103,10 @@ public class MyRealm extends AuthorizingRealm {
 			Session session = SecurityUtils.getSubject().getSession();
 			session.setAttribute("userSession", list.get(0));
 			session.setAttribute("userSessionId", list.get(0).getUserId());
-			List<RoleInfo> rolelist = roleInfoService.findRoleByUserId(null);  //TODO
-			List<ResourcesInfo> resList = resourcesInfoService.findRoleResourcess(rolelist);
+			//List<RoleInfo> rolelist = roleInfoService.findRoleByUserId(list.get(0).getUserId());  //TODO
+			//List<ResourcesInfo> resList = resourcesInfoService.findRoleResourcess(rolelist);
 			//resList = ResourcesUtils.listToMap(resList);
-			session.setAttribute("resList", resList);
+			//session.setAttribute("resList", resList);
 			return authenticationInfo;
 		} else {
 			throw new UnknownAccountException();// 没找到帐号

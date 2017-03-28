@@ -26,20 +26,11 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-    public String login(String username, String password, String jcaptcha, HttpServletRequest request) {
+    @RequestMapping(value = "login", produces = "text/html; charset=utf-8")
+    public String login(String username, String password, HttpServletRequest request) {
         // try {
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             request.setAttribute("errorMsg", ErrorMaps.NAME_NULL_MESSAGE);
-            return "login";
-        }
-        if (StringUtils.isEmpty(jcaptcha)) {
-            request.setAttribute("errorMsg", ErrorMaps.CAPTCHA_NULL_MESSAGE);
-            return "login";
-        }
-        String exitCode = (String) SecurityUtils.getSubject().getSession().getAttribute("CAPTCHA_SESSION_KEY");
-        if (!jcaptcha.equalsIgnoreCase(exitCode)) {
-            request.setAttribute("errorMsg", ErrorMaps.CAPTCHA_ERROR_MESSAGE);
             return "login";
         }
         Subject user = SecurityUtils.getSubject();
