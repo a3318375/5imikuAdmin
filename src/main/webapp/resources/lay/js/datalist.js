@@ -12,8 +12,24 @@ layui.define(['laypage', 'layer', 'form', 'pagesize'], function (exports) {
         form = layui.form(),
         laypage = layui.laypage;
     var laypageId = 'pageNav';
-
-    initilData(1, 8);
+    form.render('checkbox');
+    $('#dataConsole,#dataList').attr('style', 'display:block'); //显示FiledBox
+    var pages = $("#pages").val();
+    var pageNum = $("#pageNum").val();
+    laypage({
+        cont: laypageId,
+        pages: pages,
+        groups: 8,
+        skip: true,
+        curr: pageNum,
+        jump: function (obj, first) {
+            if (!first) {
+                $("#pageNum").val(obj.curr);
+                $("#blogfrom").submit();
+            }
+        }
+    });
+   //initilData(1, 8);
     //页数据初始化
     //currentIndex：当前也下标
     //pageSize：页容量（每页显示的条数）
