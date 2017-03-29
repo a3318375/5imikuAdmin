@@ -79,7 +79,7 @@ public class CaptchaEngine {
 
 		return buffImg;
 	}
-	
+
 	private Color getRandColor(int fc, int bc) {// 给定范围获得随机颜色
 		Random random = new Random();
 		if (fc > 255)

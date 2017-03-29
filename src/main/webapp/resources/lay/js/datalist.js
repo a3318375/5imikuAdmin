@@ -6,12 +6,26 @@
 
 */
 
-layui.define(['laypage', 'layer', 'form', 'pagesize'], function (exports) {
+layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], function (exports) {
     var $ = layui.jquery,
         layer = layui.layer,
         form = layui.form(),
         laypage = layui.laypage;
     var laypageId = 'pageNav';
+    var layedit = layui.layedit;
+    var index = layedit.build('demo'); //建立编辑器
+    form.on('submit(addBlog)', function (data) {
+        var htmls = layedit.getContent(index);
+        $("#context").val(htmls);
+        $("#myfrom").submit();
+    });
+    layui.upload({
+        url: '/uploadFile/cover'
+        ,success: function(res){
+            $("#articleCoverImg").attr("src", res.url);
+            $("#blogCover").val(res.url);
+        }
+    });
     form.render('checkbox');
     $('#dataConsole,#dataList').attr('style', 'display:block'); //显示FiledBox
     var pages = $("#pages").val();
@@ -25,7 +39,8 @@ layui.define(['laypage', 'layer', 'form', 'pagesize'], function (exports) {
         jump: function (obj, first) {
             if (!first) {
                 $("#pageNum").val(obj.curr);
-                $("#blogfrom").submit();
+                var myform = $("#blogfrom");
+                myform.submit();
             }
         }
     });
@@ -130,7 +145,7 @@ layui.define(['laypage', 'layer', 'form', 'pagesize'], function (exports) {
         var index = layer.load(1);
         setTimeout(function () {
             layer.close(index);
-            layer.msg('打开添加窗口');
+            location.href = "/blog/addBlog"
         }, 500);
     });
 
@@ -149,7 +164,6 @@ layui.define(['laypage', 'layer', 'form', 'pagesize'], function (exports) {
             layer.msg('编辑Id为【' + id + '】的数据');
         }
     };
-
 
     exports('datalist', datalist);
 });

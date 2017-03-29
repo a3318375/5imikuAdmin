@@ -61,42 +61,38 @@
     </style>
 </head>
 <body>
-<div id="blogdiv" style="display: none;">
-    <from id="blogfrom" action="/blog/list">
-        <input type="hidden" id="pageNum" name="pageNum" value="${page.pageNum}"/>
-        <input type="hidden" id="pages" name="pages" value="${page.pages}" />
-    </from>
-</div>
     <fieldset id="dataConsole" class="layui-elem-field layui-field-title"  style="display:none;">
         <legend>控制台</legend>
         <div class="layui-field-box">
             <div id="articleIndexTop">
-                <form class="layui-form layui-form-pane" action="">
+                <form id="blogfrom" class="layui-form layui-form-pane" action="/blog/list">
                     <div class="layui-form-item" style="margin:0;margin-top:15px;">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">分类</label>
-                            <div class="layui-input-inline">
-                                <select name="city">
-                                    <option value="0"></option>
-                                    <option value="1">类别1</option>
-                                    <option value="2">类别2</option>
-                                    <option value="3">类别3</option>
-                                </select>
+                            <input type="hidden" id="pageNum" name="pageNum" value="${page.pageNum}"/>
+                            <input type="hidden" id="pages" name="pages" value="${page.pages}" />
+                            <div class="layui-inline">
+                                <label class="layui-form-label">分类</label>
+                                <div class="layui-input-inline">
+                                    <select name="blogType">
+                                        <c:forEach items="${tlist}" var = "type">
+                                            <option value="${type.typeId}" ${type.typeId eq blogVo.blogType ? 'selected=\"selected\"' : ''}>${type.typeName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <label class="layui-form-label">关键词</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="blogName" autocomplete="off" class="layui-input" value="${blogVo.blogName}">
+                                </div>
+                                <div class="layui-input-inline" style="width:auto">
+                                    <button class="layui-btn" lay-submit lay-filter="formSearch">搜索</button>
+                                </div>
                             </div>
-                            <label class="layui-form-label">关键词</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="keywords" autocomplete="off" class="layui-input">
-                            </div>
-                            <div class="layui-input-inline" style="width:auto">
-                                <button class="layui-btn" lay-submit lay-filter="formSearch">搜索</button>
-                            </div>
-                        </div>
                         <div class="layui-inline">
                             <div class="layui-input-inline" style="width:auto">
                                 <a id="addArticle" class="layui-btn layui-btn-normal">发表文章</a>
                             </div>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>

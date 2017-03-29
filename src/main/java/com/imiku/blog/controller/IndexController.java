@@ -1,6 +1,7 @@
 package com.imiku.blog.controller;
 
 import com.imiku.blog.utils.ErrorMaps;
+import com.imiku.blog.utils.PasswordHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

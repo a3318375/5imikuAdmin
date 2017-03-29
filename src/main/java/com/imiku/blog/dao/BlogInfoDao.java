@@ -1,6 +1,7 @@
 package com.imiku.blog.dao;
 
 import com.imiku.blog.model.BlogInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -53,5 +54,5 @@ public interface BlogInfoDao {
      */
     int updateByPrimaryKey(BlogInfo record);
 
-    List<BlogInfo> list();
+    List<BlogInfo> list(@Param("blogTitle")String blogName, @Param("typeId") String blogType);
 }

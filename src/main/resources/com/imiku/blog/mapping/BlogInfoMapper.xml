@@ -39,9 +39,15 @@
   </select>
 
   <select id="list" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
-    from blog_info
+    select b.*
+    FROM blog_info b,type_info t
+    where b.type_id = t.type_id
+    <if test="typeId != null" >
+      and b.type_id = #{typeId,jdbcType=VARCHAR}
+    </if>
+    <if test="blogTitle != null" >
+      and b.blog_title like "%"#{blogTitle,jdbcType=VARCHAR}"%"
+    </if>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
