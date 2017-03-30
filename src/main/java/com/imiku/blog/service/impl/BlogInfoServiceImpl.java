@@ -41,12 +41,14 @@ public class BlogInfoServiceImpl implements BlogInfoService {
     public void saveBlog(BlogVo blogVo) {
         BlogInfo blogInfo = new BlogInfo();
         String uuid = UUIDUtils.getUUID36();
-        blogInfo.setBlogId(uuid);
+        blogInfo.setBlogUuid(uuid);
         blogInfo.setBlogAuthor(blogVo.getBlogAuthor());
         blogInfo.setBlogTitle(blogVo.getBlogName());
         blogInfo.setTypeId(blogVo.getBlogType());
         blogInfo.setBlogCover(blogVo.getBlogCover());
         blogInfo.setCreateDate(new Date());
+        blogInfo.setTopSwitch(1);
+        blogInfo.setRecommendSwitch(1);
         blogInfo.setBlogAbstract(blogVo.getBlogAbstract());
         String date  = DateUtils.get8Date();
         String path = Toolkits.getPath() + "htm/"+ date + "/htm/";

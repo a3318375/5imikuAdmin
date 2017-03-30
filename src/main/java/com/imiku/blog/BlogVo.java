@@ -6,13 +6,32 @@ package com.imiku.blog;
 public class BlogVo {
 
     private Integer pageNum;  //页码
-    private String blogType;
+    private Integer blogType;
     private String blogName;
 
     private String blogAbstract;
     private String context;
     private String blogAuthor;
     private String blogCover;
+
+    private Integer top;
+    private Integer recommend;
+
+    public Integer getTop() {
+        return top;
+    }
+
+    public void setTop(Integer top) {
+        this.top = top;
+    }
+
+    public Integer getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(Integer recommend) {
+        this.recommend = recommend;
+    }
 
     public String getBlogAbstract() {
         return blogAbstract;
@@ -46,11 +65,11 @@ public class BlogVo {
         this.blogCover = blogCover;
     }
 
-    public String getBlogType() {
+    public Integer getBlogType() {
         return blogType;
     }
 
-    public void setBlogType(String blogType) {
+    public void setBlogType(Integer blogType) {
         this.blogType = blogType;
     }
 

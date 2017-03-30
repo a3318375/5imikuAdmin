@@ -133,14 +133,14 @@
                             <td>
                                 <form class="layui-form" action="">
                                     <div class="layui-form-item" style="margin:0;">
-                                        <input type="checkbox" name="top" title="置顶" lay-filter="top" checked>
+                                        <input type="checkbox" name="top" title="置顶" lay-filter="top" value="${blog.topSwitch}" ${blog.topSwitch == 0 ? 'checked' : ''}>
                                     </div>
                                 </form>
                             </td>
                             <td>
                                 <form class="layui-form" action="">
                                     <div class="layui-form-item" style="margin:0;">
-                                        <input type="checkbox" name="top" title="推荐" lay-filter="recommend" checked>
+                                        <input type="checkbox" name="recommend" title="推荐" value="${blog.recommendSwitch}" lay-filter="recommend" ${blog.recommendSwitch == 0 ? 'checked' : ''}>
                                     </div>
                                 </form>
                             </td>

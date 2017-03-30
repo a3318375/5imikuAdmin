@@ -37,7 +37,7 @@
         </javaClientGenerator>
 
         <!-- 每一个数据库表都需要建立一个对应的table字段 -->
-        <table schema="general" tableName="comment_info" domainObjectName="CommentInfo"
+        <table schema="general" tableName="role_resource" domainObjectName="RoleResource"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
