@@ -12,4 +12,8 @@ public interface BlogInfoService {
     PageInfo<BlogInfo> list(BlogVo blogVo);
 
     void saveBlog(BlogVo blogVo);
+
+    void updateRecommend(BlogVo blogVo);
+
+    void updateTop(BlogVo blogVo);
 }

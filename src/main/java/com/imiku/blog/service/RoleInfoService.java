@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface RoleInfoService {
     List<RoleInfo> findRoleByUserId(int userId);
+
+    List<RoleInfo> findAllRoles();
 }

@@ -71,5 +71,19 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         blogInfoDao.insert(blogInfo);
     }
 
+    @Override
+    public void updateRecommend(BlogVo blogVo) {
+        BlogInfo blogInfo = blogInfoDao.selectByPrimaryKey(blogVo.getBlogId());
+        blogInfo.setRecommendSwitch(blogVo.getRecommend());
+        blogInfoDao.updateByPrimaryKey(blogInfo);
+    }
+
+    @Override
+    public void updateTop(BlogVo blogVo) {
+        BlogInfo blogInfo = blogInfoDao.selectByPrimaryKey(blogVo.getBlogId());
+        blogInfo.setTopSwitch(blogVo.getTop());
+        blogInfoDao.updateByPrimaryKey(blogInfo);
+    }
+
 
 }

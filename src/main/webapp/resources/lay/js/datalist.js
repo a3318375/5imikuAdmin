@@ -119,26 +119,63 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
     //监听置顶CheckBox
     form.on('checkbox(top)', function (data) {
         var index = layer.load(1);
-        setTimeout(function () {
-            layer.close(index);
-            if (data.elem.checked) {
+        var blogId = data.elem.value;
+        var top;
+        if(data.elem.checked){
+            top = 0;
+        }else{
+            top = 1;
+        }
+        $.ajax({
+            url:'/blog/updateTop',
+            data:{
+                blogId:blogId,
+                top:top
+            },
+            success:function(data){
+                if(data){
+                    layer.close(index);
+                    layer.msg('操作成功');
+                }else{
+                    data.elem.checked = false;
+                    layer.msg('操作失败，返回原来状态');
+                }
+            },
+            error:function(){
                 data.elem.checked = false;
             }
-            else {
-                data.elem.checked = true;
-            }
-            layer.msg('操作失败，返回原来状态');
-            form.render();  //重新渲染
-        }, 300);
+        });
     });
 
     //监听推荐CheckBox
     form.on('checkbox(recommend)', function (data) {
         var index = layer.load(1);
-        setTimeout(function () {
-            layer.close(index);
-            layer.msg('操作成功');
-        }, 300);
+        var blogId = data.elem.value;
+        var recommend;
+        if(data.elem.checked){
+            recommend = 0;
+        }else{
+            recommend = 1;
+        }
+        $.ajax({
+            url:'/blog/updateRecommend',
+            data:{
+                blogId:blogId,
+                recommend:recommend
+            },
+            success:function(data){
+                if(data){
+                    layer.close(index);
+                    layer.msg('操作成功');
+                }else{
+                    data.elem.checked = false;
+                    layer.msg('操作失败，返回原来状态');
+                }
+            },
+            error:function(){
+                data.elem.checked = false;
+            }
+        });
     });
     //添加数据
     $('#addArticle').click(function () {

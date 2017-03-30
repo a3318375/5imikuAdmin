@@ -1,8 +1,10 @@
 package com.imiku.blog.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.imiku.blog.dao.UserInfoDao;
 import com.imiku.blog.model.UserInfo;
 import com.imiku.blog.service.UserInfoService;
+import com.imiku.blog.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +27,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfo getByAccountName(String username) {
         return userInfoDao.getByAccountName(username);
+    }
+
+    @Override
+    public PageInfo<UserInfo> list(UserVo userVo) {
+        return null;
+    }
+
+    @Override
+    public void addUser(UserVo userVo) {
+
     }
 }

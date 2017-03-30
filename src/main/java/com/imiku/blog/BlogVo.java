@@ -8,6 +8,7 @@ public class BlogVo {
     private Integer pageNum;  //页码
     private Integer blogType;
     private String blogName;
+    private Integer blogId;
 
     private String blogAbstract;
     private String context;
@@ -16,6 +17,14 @@ public class BlogVo {
 
     private Integer top;
     private Integer recommend;
+
+    public Integer getBlogId() {
+        return blogId;
+    }
+
+    public void setBlogId(Integer blogId) {
+        this.blogId = blogId;
+    }
 
     public Integer getTop() {
         return top;

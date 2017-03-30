@@ -21,4 +21,9 @@ public class RoleInfoServiceImpl implements RoleInfoService {
     public List<RoleInfo> findRoleByUserId(int userId) {
         return roleInfoDao.findRoleByUserId(userId);
     }
+
+    @Override
+    public List<RoleInfo> findAllRoles() {
+        return null;
+    }
 }
