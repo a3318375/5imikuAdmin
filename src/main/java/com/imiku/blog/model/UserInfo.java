@@ -83,6 +83,17 @@ public class UserInfo {
      *
      * @mbggenerated Tue Mar 28 00:20:17 CST 2017
      */
+
+    private Integer roleId;
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
     public Integer getUserId() {
         return userId;
     }

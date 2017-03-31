@@ -10,4 +10,6 @@ public interface UserInfoDao extends BaseDao<UserInfo> {
     UserInfo getByAccountName(String username);
 
     List<UserInfo> findByNames(String username);
+
+    List<UserInfo> list(String userName, Integer roleId);
 }

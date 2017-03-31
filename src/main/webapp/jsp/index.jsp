@@ -59,7 +59,7 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="fa fa-user"></i>用户管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">全部用户</a></dd>
+                            <dd><a href="javascript:;" data-url="/user/list?pageNum=1" data-id="5">用户管理</a></dd>
                             <dd><a href="javascript:;">黑名单管理</a></dd>
                         </dl>
                     </li>
@@ -69,9 +69,9 @@
                             <dd><a href="javascript:;">友情链接</a></dd>
                             <dd><a href="javascript:;">博主信息</a></dd>
                             <dd><a href="javascript:;">网站信息</a></dd>
-                            <dd><a href="javascript:;" data-url="datalist.html" data-id="5">网站公告</a></dd>
-                            <dd><a href="javascript:;" data-url="datalist.html" data-id="6">更新日志</a></dd>
-                            <dd><a href="javascript:;" data-url="datalist.html" data-id="7">留言管理</a></dd>
+                            <dd><a href="javascript:;" data-url="datalist.html" data-id="6">网站公告</a></dd>
+                            <dd><a href="javascript:;" data-url="datalist.html" data-id="7">更新日志</a></dd>
+                            <dd><a href="javascript:;" data-url="datalist.html" data-id="8">留言管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
