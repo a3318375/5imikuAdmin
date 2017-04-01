@@ -18,4 +18,6 @@ public interface UserInfoService {
     PageInfo<UserInfo> list(UserVo userVo);
 
     void addUser(UserVo userVo);
+
+    void updateLock(UserVo userVo);
 }

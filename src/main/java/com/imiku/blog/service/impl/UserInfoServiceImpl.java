@@ -46,4 +46,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     public void addUser(UserVo userVo) {
 
     }
+
+    @Override
+    public void updateLock(UserVo userVo) {
+        UserInfo userInfo = userInfoDao.selectByPrimaryKey(userVo.getUserId());
+        userInfo.setLocked(userVo.getLock());
+        userInfoDao.updateByPrimaryKey(userInfo);
+    }
 }

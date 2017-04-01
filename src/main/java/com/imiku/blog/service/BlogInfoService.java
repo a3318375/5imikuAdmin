@@ -16,4 +16,8 @@ public interface BlogInfoService {
     void updateRecommend(BlogVo blogVo);
 
     void updateTop(BlogVo blogVo);
+
+    BlogVo toUpdateBlog(BlogVo blogVo);
+
+    void updateBlog(BlogVo blogVo);
 }

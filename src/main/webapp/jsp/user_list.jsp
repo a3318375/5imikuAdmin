@@ -71,8 +71,9 @@
                             <input type="hidden" id="pages" name="pages" value="${page.pages}" />
                             <div class="layui-inline">
                                 <label class="layui-form-label">分类</label>
-                                <div class="layui-input-inline">
+                                <div class="layui-input-inline">000000000
                                     <select name="blogType">
+                                        <option value=''></option>
                                         <c:forEach items="${rlist}" var = "role">
                                             <option value="${role.roleId}" ${role.roleId eq userVo.roleId ? 'selected=\"selected\"' : ''}>${role.roleName}</option>
                                         </c:forEach>
@@ -119,6 +120,7 @@
                             <th>用户名</th>
                             <th>账号</th>
                             <th>角色</th>
+                            <th>锁定</th>
                             <th colspan="2">选项</th>
                         </tr>
                     </thead>
@@ -132,7 +134,7 @@
                             <td>
                                 <form class="layui-form" action="">
                                     <div class="layui-form-item" style="margin:0;">
-                                        <input type="checkbox" name="lock" title="置顶" lay-filter="lock" value="${user.userId}" ${user.locked == 0 ? 'checked' : ''}>
+                                        <input type="checkbox" name="lock" lay-filter="lock" lay-skin="switch" lay-text="锁定|可用"  value="${user.userId}" ${user.locked == 0 ? 'checked' : ''}>
                                     </div>
                                 </form>
                             </td>

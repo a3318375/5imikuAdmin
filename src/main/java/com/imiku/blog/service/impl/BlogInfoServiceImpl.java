@@ -23,6 +23,8 @@ import java.util.List;
 @Service
 public class BlogInfoServiceImpl implements BlogInfoService {
 
+    private static final String jspStr = "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>";
+
     @Resource
     private BlogInfoDao blogInfoDao;
 
@@ -63,7 +65,7 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         try {
             OutputStreamWriter writerStream = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
             BufferedWriter bw = new BufferedWriter(writerStream);
-            bw.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>" + blogVo.getContext());
+            bw.write(jspStr  + blogVo.getContext());
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -83,6 +85,34 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         BlogInfo blogInfo = blogInfoDao.selectByPrimaryKey(blogVo.getBlogId());
         blogInfo.setTopSwitch(blogVo.getTop());
         blogInfoDao.updateByPrimaryKey(blogInfo);
+    }
+
+    @Override
+    public BlogVo toUpdateBlog(BlogVo blogVo) {
+        BlogInfo blogInfo = blogInfoDao.selectByPrimaryKey(blogVo.getBlogId());
+        blogVo.setBlogInfo(blogInfo);
+        try{
+            StringBuffer stringBuffer = new StringBuffer();
+            String path = Toolkits.getPath().replace("upload/","");
+            File file = new File(path + blogInfo.getBlogUrl());
+            FileInputStream fileInputStream = new FileInputStream(file);
+            InputStreamReader read = new InputStreamReader(fileInputStream,"UTF-8");
+            BufferedReader br = new BufferedReader(read);
+            String lineTxt = null;
+            while((lineTxt = br.readLine()) != null){
+                stringBuffer.append(lineTxt);
+            }
+            blogVo.setContext(stringBuffer.toString().replace(jspStr,""));
+            read.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return blogVo;
+    }
+
+    @Override
+    public void updateBlog(BlogVo blogVo) {
+
     }
 
 

@@ -10,6 +10,7 @@ import com.imiku.blog.vo.UserVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -49,4 +50,11 @@ public class UserController {
         return "redirect:/user/list?pageNum=1";
     }
 
+
+    @RequestMapping("/updateLock")
+    @ResponseBody
+    public boolean updateLock(UserVo userVo) throws Exception {
+        userInfoService.updateLock(userVo);
+        return true;
+    }
 }

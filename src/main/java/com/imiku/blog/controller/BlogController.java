@@ -62,4 +62,20 @@ public class BlogController {
         blogInfoService.updateRecommend(blogVo);
         return true;
     }
+
+
+    @RequestMapping("/toUpdateBlog")
+    public String toUpdateBlog(BlogVo blogVo, Model model) throws Exception {
+        blogVo = blogInfoService.toUpdateBlog(blogVo);
+        List<TypeInfo> tlist = typeInfoService.findAllTypes();
+        model.addAttribute("tlist",tlist);
+        model.addAttribute("blogVo",blogVo);
+        return "blog_update";
+    }
+
+    @RequestMapping("/updateBlog")
+    public String updateBlog(BlogVo blogVo) throws Exception {
+        blogInfoService.updateBlog(blogVo);
+        return "redirect:/blog/list?pageNum=1";
+    }
 }

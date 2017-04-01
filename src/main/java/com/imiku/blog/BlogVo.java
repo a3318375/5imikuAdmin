@@ -1,5 +1,7 @@
 package com.imiku.blog;
 
+import com.imiku.blog.model.BlogInfo;
+
 /**
  * Created by Lenovo on 2017/3/29.
  */
@@ -17,6 +19,15 @@ public class BlogVo {
 
     private Integer top;
     private Integer recommend;
+    private BlogInfo blogInfo;
+
+    public BlogInfo getBlogInfo() {
+        return blogInfo;
+    }
+
+    public void setBlogInfo(BlogInfo blogInfo) {
+        this.blogInfo = blogInfo;
+    }
 
     public Integer getBlogId() {
         return blogId;

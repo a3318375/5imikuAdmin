@@ -52,15 +52,20 @@
                             <dd><a href="javascript:;" data-url="datalist.html" data-id="2">资源管理</a></dd>
                             <dd><a href="javascript:;" data-url="datalist.html" data-id="3">时光轴管理</a></dd>
                             <dd><a href="javascript:;">笔记本管理</a></dd>
-                            <dd><a href="javascript:;" data-url="datalist.html" data-id="4">文章回收站</a></dd>
-                            <dd><a href="javascript:;">资源回收站</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="fa fa-user"></i>用户管理</a>
                         <dl class="layui-nav-child">
                             <dd><a href="javascript:;" data-url="/user/list?pageNum=1" data-id="5">用户管理</a></dd>
-                            <dd><a href="javascript:;">黑名单管理</a></dd>
+                            <dd><a href="javascript:;">权限管理</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="fa fa-recovery"></i>回收站</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">文章回收站</a></dd>
+                            <dd><a href="javascript:;">资源回收站</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">

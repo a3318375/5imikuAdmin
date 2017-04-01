@@ -147,6 +147,37 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         });
     });
 
+    form.on('switch(lock)', function (data) {
+        var index = layer.load(1);
+        var userId = data.elem.value;
+        var lock;
+        if(data.elem.checked){
+            lock = 0;
+        }else{
+            lock = 1;
+        }
+
+        $.ajax({
+            url:'/user/updateLock',
+            data:{
+                userId:userId,
+                lock:lock
+            },
+            success:function(data){
+                if(data){
+                    layer.close(index);
+                    layer.msg('操作成功');
+                }else{
+                    data.elem.checked = false;
+                    layer.msg('操作失败，返回原来状态');
+                }
+            },
+            error:function(){
+                data.elem.checked = false;
+            }
+        });
+    });
+
     //监听推荐CheckBox
     form.on('checkbox(recommend)', function (data) {
         var index = layer.load(1);
@@ -198,7 +229,7 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
             });
         },
         editData: function (id) {
-            layer.msg('编辑Id为【' + id + '】的数据');
+            location.href = '/blog/toUpdateBlog?blogId=' + id;
         }
     };
 
