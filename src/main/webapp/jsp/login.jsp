@@ -12,6 +12,7 @@
     <link href="${pageContext.request.contextPath}/resources/lay/css/index.css" rel="stylesheet" />
 </head>
 <body>
+    <input type="hidden" id="allpath" value="${pageContext.request.contextPath}"/>
     <div class="mask"></div>
     <div class="main">
         <h1><span style="font-size: 84px;">B</span><span style="font-size:30px;">log</span></h1>
@@ -28,6 +29,5 @@
             base: '${pageContext.request.contextPath}/resources/lay/js/'
         }).use('index');
     </script>
-    <script src="//captcha.luosimao.com/static/dist/api.js"></script>
 </body>
 </html>

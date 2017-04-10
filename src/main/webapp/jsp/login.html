@@ -7,7 +7,7 @@
  -->
 
 
-<form class="layui-form" action="">
+<form class="layui-form" id="myform" action="/5imikuAdmin/login">
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
         <div class="layui-input-inline pm-login-input">
@@ -23,7 +23,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">人机验证</label>
         <div class="layui-input-block">
-            <input type="password" name="password" lay-verify="passWord" placeholder="人机验证，百度螺丝帽" value="" autocomplete="off" class="layui-input">
+            <div class="l-captcha" data-site-key="144341d26670c10455f58f8f04e40791"></div>
         </div>
     </div>
     <div class="layui-form-item" style="margin-top:25px;margin-bottom:0;">

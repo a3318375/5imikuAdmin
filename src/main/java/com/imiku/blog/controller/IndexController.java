@@ -1,6 +1,8 @@
 package com.imiku.blog.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.imiku.blog.utils.ErrorMaps;
+import com.imiku.blog.utils.HttpClientUtils;
 import com.imiku.blog.utils.PasswordHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Lenovo on 2017/3/28.
@@ -28,10 +32,20 @@ public class IndexController {
     }
 
     @RequestMapping(value = "login", produces = "text/html; charset=utf-8")
-    public String login(String username, String password, HttpServletRequest request) {
+    public String login(String username, String password, String luotest_response,HttpServletRequest request) {
         // try {
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)|| StringUtils.isEmpty(luotest_response)) {
             request.setAttribute("errorMsg", ErrorMaps.NAME_NULL_MESSAGE);
+            return "login";
+        }
+        Map<String,String> map = new HashMap<>();
+        map.put("api_key","8ac9908a797217b04732670e4429e82c");
+        map.put("response",luotest_response);
+        String str = HttpClientUtils.sendPost("https://captcha.luosimao.com/api/site_verify",map);
+        JSONObject jsonObject = JSONObject.parseObject(str);
+        String res = jsonObject.getString("res");
+        if(!"success".equals(res)){
+            request.setAttribute("errorMsg", ErrorMaps.CAPTCHA_ERROR_MESSAGE);
             return "login";
         }
         Subject user = SecurityUtils.getSubject();

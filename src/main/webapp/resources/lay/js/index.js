@@ -79,6 +79,7 @@ layui.define(['element', 'layer', 'form'], function (exports) {
         loginHtml += '<label class="layui-form-label">人机验证</label>';
         loginHtml += '<div class="layui-input-inline pm-login-input">';
         loginHtml += '<div class="l-captcha" data-site-key="144341d26670c10455f58f8f04e40791"></div>';
+        loginHtml += '<input id="lc-captcha-response" type="hidden" name="luotest_response" value="">';
         loginHtml += '</div>';
         loginHtml += '</div>';
         loginHtml += '<div class="layui-form-item" style="margin-top:25px;margin-bottom:0;">';
@@ -87,6 +88,7 @@ layui.define(['element', 'layer', 'form'], function (exports) {
         loginHtml += ' </div>';
         loginHtml += ' </div>';
         loginHtml += '</form>';
+        loginHtml += '<script src="//captcha.luosimao.com/static/dist/api.js"></script>';
 
         layer.open({
             id: 'layer-login',
