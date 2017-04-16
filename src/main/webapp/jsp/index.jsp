@@ -16,6 +16,7 @@
     <link href="${pageContext.request.contextPath}/resources/lay/css/main.css" rel="stylesheet" />
 </head>
 <body>
+<input type="hidden" id="allpath" value="${pageContext.request.contextPath}"/>
     <div class="layui-layout layui-layout-admin">
         <!--顶部-->
         <div class="layui-header">
@@ -48,16 +49,16 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="fa fa-file-text"></i>内容管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" data-url="/blog/list?pageNum=1" data-id="1">文章管理</a></dd>
-                            <dd><a href="javascript:;" data-url="datalist.html" data-id="2">资源管理</a></dd>
-                            <dd><a href="javascript:;" data-url="datalist.html" data-id="3">时光轴管理</a></dd>
+                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}/blog/list?pageNum=1" data-id="1">文章管理</a></dd>
+                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="2">资源管理</a></dd>
+                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="3">时光轴管理</a></dd>
                             <dd><a href="javascript:;">笔记本管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="fa fa-user"></i>用户管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" data-url="/user/list?pageNum=1" data-id="5">用户管理</a></dd>
+                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}/user/list?pageNum=1" data-id="5">用户管理</a></dd>
                             <dd><a href="javascript:;">权限管理</a></dd>
                         </dl>
                     </li>
@@ -74,9 +75,9 @@
                             <dd><a href="javascript:;">友情链接</a></dd>
                             <dd><a href="javascript:;">博主信息</a></dd>
                             <dd><a href="javascript:;">网站信息</a></dd>
-                            <dd><a href="javascript:;" data-url="datalist.html" data-id="6">网站公告</a></dd>
-                            <dd><a href="javascript:;" data-url="datalist.html" data-id="7">更新日志</a></dd>
-                            <dd><a href="javascript:;" data-url="datalist.html" data-id="8">留言管理</a></dd>
+                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="6">网站公告</a></dd>
+                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="7">更新日志</a></dd>
+                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="8">留言管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">

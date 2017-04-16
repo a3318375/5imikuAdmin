@@ -11,11 +11,12 @@
     <link href="${pageContext.request.contextPath}/resources/lay/plugin/layui/css/layui.css" rel="stylesheet" />
 </head>
 <body>
+<input type="hidden" id="allpath" value="${pageContext.request.contextPath}"/>
     <fieldset id="dataList" class="layui-elem-field layui-field-title sys-list-field" style="display:none;">
         <legend style="text-align:center;">文章列表</legend>
         <div class="layui-field-box">
             <div id="dataContent" class="">
-                <form class="layui-form form-main" id="myfrom" action="/blog/saveBlog">
+                <form class="layui-form form-main" id="myfrom" action="${pageContext.request.contextPath}/blog/saveBlog">
                     <div class="layui-form-item">
                         <label class="layui-form-label">标题</label>
                         <div class="layui-input-block">

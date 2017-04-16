@@ -78,4 +78,10 @@ public class BlogController {
         blogInfoService.updateBlog(blogVo);
         return "redirect:/blog/list?pageNum=1";
     }
+
+    @RequestMapping("/deleteBlog")
+    public String deleteBlog(BlogVo blogVo) throws Exception {
+        blogInfoService.deleteBlog(blogVo);
+        return "redirect:/blog/list?pageNum=1";
+    }
 }

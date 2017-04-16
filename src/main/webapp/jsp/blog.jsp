@@ -61,11 +61,12 @@
     </style>
 </head>
 <body>
+<input type="hidden" id="allpath" value="${pageContext.request.contextPath}"/>
     <fieldset id="dataConsole" class="layui-elem-field layui-field-title"  style="display:none;">
         <legend>控制台</legend>
         <div class="layui-field-box">
             <div id="articleIndexTop">
-                <form id="blogfrom" class="layui-form layui-form-pane" action="/blog/list">
+                <form id="blogfrom" class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/blog/list">
                     <div class="layui-form-item" style="margin:0;margin-top:15px;">
                             <input type="hidden" id="pageNum" name="pageNum" value="${page.pageNum}"/>
                             <input type="hidden" id="pages" name="pages" value="${page.pages}" />
@@ -73,6 +74,7 @@
                                 <label class="layui-form-label">分类</label>
                                 <div class="layui-input-inline">
                                     <select name="blogType">
+                                        <option value="0">全部分类</option>
                                         <c:forEach items="${tlist}" var = "type">
                                             <option value="${type.typeId}" ${type.typeId eq blogVo.blogType ? 'selected=\"selected\"' : ''}>${type.typeName}</option>
                                         </c:forEach>

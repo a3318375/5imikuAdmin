@@ -11,6 +11,7 @@ public class BlogVo {
     private Integer blogType;
     private String blogName;
     private Integer blogId;
+    private String blogUuid;
 
     private String blogAbstract;
     private String context;
@@ -20,6 +21,14 @@ public class BlogVo {
     private Integer top;
     private Integer recommend;
     private BlogInfo blogInfo;
+
+    public String getBlogUuid() {
+        return blogUuid;
+    }
+
+    public void setBlogUuid(String blogUuid) {
+        this.blogUuid = blogUuid;
+    }
 
     public BlogInfo getBlogInfo() {
         return blogInfo;

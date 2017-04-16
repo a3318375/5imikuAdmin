@@ -7,6 +7,7 @@ import com.imiku.blog.dao.BlogInfoDao;
 import com.imiku.blog.model.BlogInfo;
 import com.imiku.blog.service.BlogInfoService;
 import com.imiku.blog.utils.DateUtils;
+import com.imiku.blog.utils.FileProperties;
 import com.imiku.blog.utils.Toolkits;
 import com.imiku.blog.utils.UUIDUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +34,9 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         if(StringUtils.isBlank(blogVo.getBlogName())){
             blogVo.setBlogName(null);
         }
+        if(blogVo.getBlogType() !=null&&blogVo.getBlogType() == 0){
+            blogVo.setBlogType(null);
+        }
         PageHelper.startPage(blogVo.getPageNum(), 8);
         List<BlogInfo> list = blogInfoDao.list(blogVo.getBlogName(),blogVo.getBlogType());
         PageInfo<BlogInfo> page = new PageInfo<>(list, 8);
@@ -52,10 +56,11 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         blogInfo.setTopSwitch(1);
         blogInfo.setRecommendSwitch(1);
         blogInfo.setBlogAbstract(blogVo.getBlogAbstract());
-        String date  = DateUtils.get8Date();
-        String path = Toolkits.getPath() + "htm/"+ date + "/htm/";
+
+        String htmlPath = FileProperties.htmlPath;
+        String path = htmlPath + Toolkits.getPath();
         String filename = uuid + ".jsp";
-        blogInfo.setBlogUrl("/upload/htm/"+ date + "/htm/" + uuid + ".jsp");
+        blogInfo.setBlogUrl(path + filename);
         File file = new File(path);
         if(!file.exists()){
             file.mkdirs();
@@ -93,8 +98,7 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         blogVo.setBlogInfo(blogInfo);
         try{
             StringBuffer stringBuffer = new StringBuffer();
-            String path = Toolkits.getPath().replace("upload/","");
-            File file = new File(path + blogInfo.getBlogUrl());
+            File file = new File(blogInfo.getBlogUrl());
             FileInputStream fileInputStream = new FileInputStream(file);
             InputStreamReader read = new InputStreamReader(fileInputStream,"UTF-8");
             BufferedReader br = new BufferedReader(read);
@@ -112,8 +116,46 @@ public class BlogInfoServiceImpl implements BlogInfoService {
 
     @Override
     public void updateBlog(BlogVo blogVo) {
+        BlogInfo blogInfo = blogInfoDao.selectByPrimaryKey(blogVo.getBlogId());
+        blogInfo.setBlogUuid(blogVo.getBlogUuid());
+        blogInfo.setBlogAuthor(blogVo.getBlogAuthor());
+        blogInfo.setBlogTitle(blogVo.getBlogName());
+        blogInfo.setTypeId(blogVo.getBlogType());
+        blogInfo.setBlogCover(blogVo.getBlogCover());
+        blogInfo.setCreateDate(new Date());
+        blogInfo.setTopSwitch(1);
+        blogInfo.setRecommendSwitch(1);
+        blogInfo.setBlogAbstract(blogVo.getBlogAbstract());
 
+        String filename = blogVo.getBlogUuid() + ".jsp";
+        String path = write(filename,blogVo.getContext());
+        blogInfo.setBlogUrl(path + filename);
+        blogInfoDao.updateByPrimaryKeySelective(blogInfo);
     }
 
+    @Override
+    public void deleteBlog(BlogVo blogVo) {
+        blogInfoDao.deleteByPrimaryKey(blogVo.getBlogId());
+    }
+
+    private String write(String filename,String context){
+        String htmlPath = FileProperties.htmlPath;
+        String path = htmlPath + Toolkits.getPath();
+        File file = new File(path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        file = new File(path + filename);
+        FileWriter fw = null;
+        try {
+            OutputStreamWriter writerStream = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
+            BufferedWriter bw = new BufferedWriter(writerStream);
+            bw.write(jspStr  + context);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return path;
+    }
 
 }

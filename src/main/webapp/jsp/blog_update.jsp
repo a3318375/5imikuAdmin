@@ -11,11 +11,14 @@
     <link href="${pageContext.request.contextPath}/resources/lay/plugin/layui/css/layui.css" rel="stylesheet" />
 </head>
 <body>
+<input type="hidden" id="allpath" value="${pageContext.request.contextPath}"/>
     <fieldset id="dataList" class="layui-elem-field layui-field-title sys-list-field" style="display:none;">
         <legend style="text-align:center;">文章列表</legend>
         <div class="layui-field-box">
             <div id="dataContent" class="">
-                <form class="layui-form form-main" id="myfrom" action="${pageContext.request.contextPath}/blog/updateBlog">
+                <form class="layui-form form-main" id="myfrom" action="${pageContext.request.contextPath}/blog/updateBlog">+
+                    <input type="hidden" name="blogUuid" id="blogUuid" value="${blogVo.blogInfo.blogUuid}">
+                    <input type="hidden" name="blogId" id="blogId" value="${blogVo.blogInfo.blogId}">
                     <div class="layui-form-item">
                         <label class="layui-form-label">标题</label>
                         <div class="layui-input-block">
@@ -32,7 +35,7 @@
                         <label class="layui-form-label">分类</label>
                         <div class="layui-input-block">
                             <select name="blogType" lay-verify="required">
-                                <option value="">请选择</option>
+                                <option value="0">请选择</option>
                                 <c:forEach items="${tlist}" var = "type">
                                     <option value="${type.typeId}" ${type.typeId eq blogVo.blogInfo.typeId ? 'selected=\"selected\"' : ''}>${type.typeName}</option>
                                 </c:forEach>
@@ -43,7 +46,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">作者</label>
                         <div class="layui-input-block">
-                            <input type="text" name="blogAuthor" lay-verify="required" placeholder="请输入作者" autocomplete="off" class="layui-input">
+                            <input type="text" name="blogAuthor" lay-verify="required" placeholder="请输入作者" autocomplete="off" class="layui-input" value="${blogVo.blogInfo.blogAuthor}">
                         </div>
                     </div>
                     <div class="layui-form-item layui-form-text">

@@ -34,11 +34,13 @@ public class IndexController {
     @RequestMapping(value = "login", produces = "text/html; charset=utf-8")
     public String login(String username, String password, String luotest_response,HttpServletRequest request) {
         // try {
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)|| StringUtils.isEmpty(luotest_response)) {
+        if (StringUtils.isEmpty(username)
+                //|| StringUtils.isEmpty(luotest_response)
+                || StringUtils.isEmpty(password)) {
             request.setAttribute("errorMsg", ErrorMaps.NAME_NULL_MESSAGE);
             return "login";
         }
-        Map<String,String> map = new HashMap<>();
+        /*Map<String,String> map = new HashMap<>();
         map.put("api_key","8ac9908a797217b04732670e4429e82c");
         map.put("response",luotest_response);
         String str = HttpClientUtils.sendPost("https://captcha.luosimao.com/api/site_verify",map);
@@ -47,7 +49,7 @@ public class IndexController {
         if(!"success".equals(res)){
             request.setAttribute("errorMsg", ErrorMaps.CAPTCHA_ERROR_MESSAGE);
             return "login";
-        }
+        }*/
         Subject user = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {

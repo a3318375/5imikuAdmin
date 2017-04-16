@@ -20,4 +20,6 @@ public interface BlogInfoService {
     BlogVo toUpdateBlog(BlogVo blogVo);
 
     void updateBlog(BlogVo blogVo);
+
+    void deleteBlog(BlogVo blogVo);
 }

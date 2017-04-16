@@ -1,9 +1,6 @@
 package com.imiku.blog.controller;
 
-import com.imiku.blog.utils.DateUtils;
-import com.imiku.blog.utils.ResultUtils;
-import com.imiku.blog.utils.Toolkits;
-import com.imiku.blog.utils.UUIDUtils;
+import com.imiku.blog.utils.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -25,8 +22,10 @@ public class DownloadController {
     public String  fileUpload2(@RequestParam("myFileName") CommonsMultipartFile file, HttpServletRequest request) throws IOException {
         long  startTime=System.currentTimeMillis();
         System.out.println("fileName："+file.getOriginalFilename());
-        String date  = DateUtils.get8Date();
-        String path = Toolkits.getPath() + "htm/"+ date + "/htm/";
+
+        String htmlPath = FileProperties.imgPath;
+        String path = htmlPath + Toolkits.getPath();
+
         File newFile1=new File(path);
         if(!newFile1.exists()){
             newFile1.mkdirs();
@@ -37,7 +36,7 @@ public class DownloadController {
 
         long  endTime=System.currentTimeMillis();
         System.out.println("方法二的运行时间："+String.valueOf(endTime-startTime)+"ms");
-        return  "/upload/htm/"+ date + "/htm/" + file.getOriginalFilename();
+        return  path + file.getOriginalFilename();
     }
 
 
@@ -46,8 +45,10 @@ public class DownloadController {
     public String  cover(@RequestParam("myFileName") CommonsMultipartFile file, HttpServletRequest request) throws IOException {
         String uuid = UUIDUtils.getUUID36();
         String filename = uuid + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
-        String date  = DateUtils.get8Date();
-        String path = Toolkits.getPath() + "cover/" + date + "/" ;
+
+        String htmlPath = FileProperties.coverPath;
+        String path = htmlPath + Toolkits.getPath();
+
         String name = path + filename;
         System.out.print(name);
         try{
@@ -60,7 +61,7 @@ public class DownloadController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        String str = ResultUtils.getUploadResult("/upload/cover/" + date + "/" + filename,uuid);
+        String str = ResultUtils.getUploadResult(path + filename,uuid);
         return str;
     }
 }

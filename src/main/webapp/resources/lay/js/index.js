@@ -60,9 +60,9 @@ layui.define(['element', 'layer', 'form'], function (exports) {
     $('.enter').on('click', login);
 
     function login() {
+        var allpath = $("#allpath").val();
         var loginHtml = ''; //静态页面只能拼接，这里可以用iFrame或者Ajax请求分部视图。html文件夹下有login.html
-
-        loginHtml += '<form class="layui-form" id="myform" action="/login">';
+        loginHtml += '<form class="layui-form" id="myform" action="' + allpath +  '/login">';
         loginHtml += '<div class="layui-form-item">';
         loginHtml += '<label class="layui-form-label">账号</label>';
         loginHtml += '<div class="layui-input-inline pm-login-input">';

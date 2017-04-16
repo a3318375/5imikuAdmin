@@ -1,15 +1,15 @@
 package com.imiku.blog.utils;
 
+import java.util.Calendar;
+
 /**
  * Created by Lenovo on 2017/3/23.
  */
 public class Toolkits {
 
     public static String getPath(){
-        String path = UUIDUtils.class.getResource("/").getPath();
-        path = path.substring(0,path.indexOf("WEB-INF"));
-        //path = path + "libs/exploded/5imiku-1.0-SNAPSHOT.war/upload/";
-        path = path + "upload/";
+        Calendar now = Calendar.getInstance();
+        String path = now.get(Calendar.YEAR) + "/" + (now.get(Calendar.MONTH) + 1) + "/" +  now.get(Calendar.DAY_OF_MONTH) + "/";
         return path;
     }
 }

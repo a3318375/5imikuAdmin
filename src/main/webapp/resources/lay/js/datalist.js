@@ -12,6 +12,7 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         form = layui.form(),
         laypage = layui.laypage;
     var laypageId = 'pageNav';
+    var allpath = $("#allpath").val();
     var layedit = layui.layedit;
     var index = layedit.build('demo'); //建立编辑器
     form.on('submit(addBlog)', function (data) {
@@ -20,7 +21,7 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         $("#myfrom").submit();
     });
     layui.upload({
-        url: '/uploadFile/cover'
+        url: allpath + '/uploadFile/cover'
         ,success: function(res){
             $("#articleCoverImg").attr("src", res.url);
             $("#blogCover").val(res.url);
@@ -127,7 +128,7 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
             top = 1;
         }
         $.ajax({
-            url:'/blog/updateTop',
+            url: allpath + '/blog/updateTop',
             data:{
                 blogId:blogId,
                 top:top
@@ -158,7 +159,7 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         }
 
         $.ajax({
-            url:'/user/updateLock',
+            url: allpath + '/user/updateLock',
             data:{
                 userId:userId,
                 lock:lock
@@ -189,7 +190,7 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
             recommend = 1;
         }
         $.ajax({
-            url:'/blog/updateRecommend',
+            url: allpath + '/blog/updateRecommend',
             data:{
                 blogId:blogId,
                 recommend:recommend
@@ -213,23 +214,21 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         var index = layer.load(1);
         setTimeout(function () {
             layer.close(index);
-            location.href = "/blog/addBlog"
+            location.href = allpath + "/blog/addBlog"
         }, 500);
     });
 
     //输出接口，主要是两个函数，一个删除一个编辑
     var datalist = {
         deleteData: function (id) {
-            layer.confirm('确定删除？', {
+            layer.confirm('确定删除1？', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
-                layer.msg('删除Id为【' + id + '】的数据');
-            }, function () {
-
+                location.href =  allpath + '/blog/deleteBlog?blogId=' + id;
             });
         },
         editData: function (id) {
-            location.href = '/blog/toUpdateBlog?blogId=' + id;
+            location.href =  allpath + '/blog/toUpdateBlog?blogId=' + id;
         }
     };
 
