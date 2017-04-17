@@ -24,7 +24,8 @@ public class DownloadController {
         System.out.println("fileName："+file.getOriginalFilename());
 
         String htmlPath = FileProperties.imgPath;
-        String path = htmlPath + Toolkits.getPath();
+        String imgPath = "img/" + Toolkits.getPath();
+        String path = htmlPath + imgPath;
 
         File newFile1=new File(path);
         if(!newFile1.exists()){
@@ -36,7 +37,7 @@ public class DownloadController {
 
         long  endTime=System.currentTimeMillis();
         System.out.println("方法二的运行时间："+String.valueOf(endTime-startTime)+"ms");
-        return  path + file.getOriginalFilename();
+        return  "upload/" + imgPath + file.getOriginalFilename();
     }
 
 
@@ -47,7 +48,8 @@ public class DownloadController {
         String filename = uuid + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
 
         String htmlPath = FileProperties.coverPath;
-        String path = htmlPath + Toolkits.getPath();
+        String imgPath = "/cover/" + Toolkits.getPath();
+        String path = htmlPath + imgPath;
 
         String name = path + filename;
         System.out.print(name);
@@ -61,7 +63,7 @@ public class DownloadController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        String str = ResultUtils.getUploadResult(path + filename,uuid);
+        String str = ResultUtils.getUploadResult("/upload/" + imgPath + filename,uuid);
         return str;
     }
 }

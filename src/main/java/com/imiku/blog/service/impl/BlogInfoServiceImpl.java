@@ -58,9 +58,10 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         blogInfo.setBlogAbstract(blogVo.getBlogAbstract());
 
         String htmlPath = FileProperties.htmlPath;
-        String path = htmlPath + Toolkits.getPath();
+        String blogPath = "html/" + Toolkits.getPath();
+        String path = htmlPath + blogPath;
         String filename = uuid + ".jsp";
-        blogInfo.setBlogUrl(path + filename);
+        blogInfo.setBlogUrl("/upload/" + blogPath + filename);
         File file = new File(path);
         if(!file.exists()){
             file.mkdirs();
@@ -98,7 +99,7 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         blogVo.setBlogInfo(blogInfo);
         try{
             StringBuffer stringBuffer = new StringBuffer();
-            File file = new File(blogInfo.getBlogUrl());
+            File file = new File(blogInfo.getBlogUrl().replace("/upload/",FileProperties.htmlPath));
             FileInputStream fileInputStream = new FileInputStream(file);
             InputStreamReader read = new InputStreamReader(fileInputStream,"UTF-8");
             BufferedReader br = new BufferedReader(read);
@@ -129,7 +130,7 @@ public class BlogInfoServiceImpl implements BlogInfoService {
 
         String filename = blogVo.getBlogUuid() + ".jsp";
         String path = write(filename,blogVo.getContext());
-        blogInfo.setBlogUrl(path + filename);
+        blogInfo.setBlogUrl(path);
         blogInfoDao.updateByPrimaryKeySelective(blogInfo);
     }
 
@@ -139,13 +140,19 @@ public class BlogInfoServiceImpl implements BlogInfoService {
     }
 
     private String write(String filename,String context){
+
         String htmlPath = FileProperties.htmlPath;
-        String path = htmlPath + Toolkits.getPath();
+        String blogPath = "html/" + Toolkits.getPath();
+        String path = htmlPath + blogPath;
+
         File file = new File(path);
         if(!file.exists()){
             file.mkdirs();
         }
         file = new File(path + filename);
+        if(file.exists()){
+            file.delete();
+        }
         FileWriter fw = null;
         try {
             OutputStreamWriter writerStream = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
@@ -155,7 +162,7 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return path;
+        return "/upload/" + blogPath + filename;
     }
 
 }
