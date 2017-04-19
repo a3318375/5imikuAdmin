@@ -2,6 +2,8 @@ package com.imiku.blog;
 
 import com.imiku.blog.model.BlogInfo;
 
+import java.util.Date;
+
 /**
  * Created by Lenovo on 2017/3/29.
  */
@@ -21,6 +23,24 @@ public class BlogVo {
     private Integer top;
     private Integer recommend;
     private BlogInfo blogInfo;
+    private String level;
+    private Date createDate;
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
     public String getBlogUuid() {
         return blogUuid;

@@ -51,8 +51,8 @@
                         <dl class="layui-nav-child">
                             <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}/blog/list?pageNum=1" data-id="1">文章管理</a></dd>
                             <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="2">资源管理</a></dd>
-                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="3">时光轴管理</a></dd>
-                            <dd><a href="javascript:;">笔记本管理</a></dd>
+                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}/journal/list?pageNum=1" data-id="3">笔记本管理</a></dd>
+                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}/notice/list?pageNum=1" data-id="4">公告管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -75,8 +75,6 @@
                             <dd><a href="javascript:;">友情链接</a></dd>
                             <dd><a href="javascript:;">博主信息</a></dd>
                             <dd><a href="javascript:;">网站信息</a></dd>
-                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="6">网站公告</a></dd>
-                            <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="7">更新日志</a></dd>
                             <dd><a href="javascript:;" data-url="${pageContext.request.contextPath}" data-id="8">留言管理</a></dd>
                         </dl>
                     </li>

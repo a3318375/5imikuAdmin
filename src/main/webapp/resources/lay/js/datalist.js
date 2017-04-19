@@ -232,5 +232,37 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         }
     };
 
+
     exports('datalist', datalist);
 });
+function addAnnouncement() {
+    var $ = layui.jquery;
+    var index = layer.load(1);
+    var allpath = $("#allpath").val();
+    layer.close(index);
+    var html = '<form class="layui-form" id="myform">' +
+        '<div class="layui-form-item"><label class="layui-form-label">内容</label><div class="layui-input-block">' +
+        '<input type="hidden" name="context" id="context"><textarea id="demo" style="display: none;width: 538;"></textarea>' +
+        '</div></div><div class="layui-form-item"><label class="layui-form-label">公告级别</label>' +
+        '<div class="layui-input-block">' +
+        '<input type="radio" name="level" value="1" title="普通" checked>' +
+        '<input type="radio" name="level" value="2" title="一般">' +
+        '<input type="radio" name="level" value="3" title="重要">' +
+        '</div></div><div class="layui-form-item"><div class="layui-input-block">' +
+        '<button class="layui-btn" lay-submit="" lay-filter="formAnnouncement">立即提交</button>' +
+        '</div></div></form>' +
+        "<script>layui.use(['layedit','form'], function(){var layedit = layui.layedit;layedit.build('demo',{height:150,tool: ['strong','italic','underline','del','|','left','center','right','link','unlink','face']});layui.form().on('submit(formAnnouncement)', function (data) {var htmls = layedit.getContent(index);$('#context').val(htmls);alert($('#myfrom').serialize());});});</script>";
+    parent.layer.open({
+        type: 1,
+        area: ['700px', '400px'],
+        offset: '20vh',
+        title: "发布公告",
+        closeBtn: 1,
+        shade: 0.6,
+        scrollbar: false,
+        shadeClose: false,
+        skin: 'layer-css',
+        content: html
+    });
+    parent.layui.form().render();
+}

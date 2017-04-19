@@ -26,6 +26,9 @@
         #dataConsole {
             text-align: center;
         }
+        #announcementConsole {
+            text-align: center;
+        }
         /*分页页容量样式*/
         /*可选*/
         .layui-laypage {
@@ -61,39 +64,19 @@
     </style>
 </head>
 <body>
-    <fieldset id="dataConsole" class="layui-elem-field layui-field-title"  style="display:none;">
+<input type="hidden" id="allpath" value="${pageContext.request.contextPath}"/>
+    <fieldset id="announcementConsole" class="layui-elem-field layui-field-title" style="display:block">
         <legend>控制台</legend>
         <div class="layui-field-box">
-            <div id="articleIndexTop">
-                <form id="blogfrom" class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/user/list">
+            <div id="announcementIndexTop">
+                <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item" style="margin:0;margin-top:15px;">
-                            <input type="hidden" id="pageNum" name="pageNum" value="${page.pageNum}"/>
-                            <input type="hidden" id="pages" name="pages" value="${page.pages}" />
-                            <div class="layui-inline">
-                                <label class="layui-form-label">分类</label>
-                                <div class="layui-input-inline">000000000
-                                    <select name="blogType">
-                                        <option value=''></option>
-                                        <c:forEach items="${rlist}" var = "role">
-                                            <option value="${role.roleId}" ${role.roleId eq userVo.roleId ? 'selected=\"selected\"' : ''}>${role.roleName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <label class="layui-form-label">用户名</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="blogName" autocomplete="off" class="layui-input" value="${userVo.userName}">
-                                </div>
-                                <div class="layui-input-inline" style="width:auto">
-                                    <button class="layui-btn" lay-submit lay-filter="formSearch">搜索</button>
-                                </div>
-                            </div>
                         <div class="layui-inline">
                             <div class="layui-input-inline" style="width:auto">
-                                <a id="addArticle" class="layui-btn layui-btn-normal">新增用户</a>
+                                <a onclick="addAnnouncement()" class="layui-btn layui-btn-normal">发布公告</a>
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -116,28 +99,18 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>创建时间</th>
-                            <th>用户名</th>
-                            <th>账号</th>
-                            <th>角色</th>
-                            <th>锁定</th>
+                            <th>发布日期</th>
+                            <th>内容</th>
+                            <th>级别</th>
                             <th colspan="2">选项</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${page.list}" var = "user" varStatus="status">
+                    <c:forEach items="${page.list}" var = "notice" varStatus="status">
                         <tr>
-                            <td><fmt:formatDate value="${user.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                            <td>${user.userName}</td>
-                            <td>${user.accountName}</td>
-                            <td>管理员</td>
-                            <td>
-                                <form class="layui-form" action="">
-                                    <div class="layui-form-item" style="margin:0;">
-                                        <input type="checkbox" name="lock" lay-filter="lock" lay-skin="switch" lay-text="锁定|可用"  value="${user.userId}" ${user.locked == 0 ? 'checked' : ''}>
-                                    </div>
-                                </form>
-                            </td>
+                            <td><fmt:formatDate value="${notice.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                            <td>${notice.noticeContext}</td>
+                            <td>${notice.level}</td>
                             <td>
                                 <button class="layui-btn layui-btn-small layui-btn-normal"><i class="layui-icon">&#xe642;</i></button>
                             </td>

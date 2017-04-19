@@ -66,13 +66,13 @@ layui.define(['element', 'layer', 'form'], function (exports) {
         loginHtml += '<div class="layui-form-item">';
         loginHtml += '<label class="layui-form-label">账号</label>';
         loginHtml += '<div class="layui-input-inline pm-login-input">';
-        loginHtml += '<input type="text" name="username" lay-verify="account" placeholder="请输入账号" value="admin" autocomplete="off" class="layui-input">';
+        loginHtml += '<input type="text" name="username" lay-verify="account" placeholder="请输入账号" autocomplete="off" class="layui-input">';
         loginHtml += '</div>';
         loginHtml += '</div>';
         loginHtml += '<div class="layui-form-item">';
         loginHtml += '<label class="layui-form-label">密码</label>';
         loginHtml += '<div class="layui-input-inline pm-login-input">';
-        loginHtml += '<input type="password" name="password" lay-verify="passWord" placeholder="请输入密码" value="123" autocomplete="off" class="layui-input">';
+        loginHtml += '<input type="password" name="password" lay-verify="passWord" placeholder="请输入密码" autocomplete="off" class="layui-input">';
         loginHtml += '</div>';
         loginHtml += '</div>';
         loginHtml += '<div class="layui-form-item">';
