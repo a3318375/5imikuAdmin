@@ -8,4 +8,6 @@ import java.util.List;
 public interface RoleInfoDao extends BaseDao<RoleInfo> {
 
     List<RoleInfo> findRoleByUserId(int userId);
+
+    List<RoleInfo> findAllRoles();
 }

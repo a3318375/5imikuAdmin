@@ -9,6 +9,7 @@
     <title>数据列表页面</title>
     <!-- layui.css -->
     <link href="${pageContext.request.contextPath}/resources/lay/plugin/layui/css/layui.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/resources/lay/css/main.css" rel="stylesheet" />
 </head>
 <body>
 <input type="hidden" id="allpath" value="${pageContext.request.contextPath}"/>
@@ -33,8 +34,9 @@
                         <label class="layui-form-label">分类</label>
                         <div class="layui-input-block">
                             <select name="blogType" lay-verify="required">
+                                <option value="0">请选择</option>
                                 <c:forEach items="${tlist}" var = "type">
-                                    <option value="${type.typeId}" ${type.typeId eq blogVo.blogType ? 'selected=\"selected\"' : ''}>${type.typeName}</option>
+                                    <option value="${type.typeId}">${type.typeName}</option>
                                 </c:forEach>
                             </select><div class="layui-unselect layui-form-select"><div class="layui-select-title">
                             <input type="text" placeholder="请选择" value="" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit"><dd lay-value="LY02212035178403" class="">ASP.NET MVC</dd><dd lay-value="LY02212035194645" class="">SQL Server</dd><dd lay-value="LY02212035203846" class="">Entity Framework</dd><dd lay-value="LY02212035218423" class="">Web前端</dd><dd lay-value="LY02212035253489" class="">C#基础</dd><dd lay-value="LY02282245013546" class="">杂文随笔</dd></dl></div>

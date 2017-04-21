@@ -112,10 +112,10 @@
                             <td>${notice.noticeContext}</td>
                             <td>${notice.level}</td>
                             <td>
-                                <button class="layui-btn layui-btn-small layui-btn-normal"><i class="layui-icon">&#xe642;</i></button>
+                                <button class="layui-btn layui-btn-small layui-btn-normal" onclick="layui.datalist.editData(${blog.blogId})"><i class="layui-icon">&#xe642;</i></button>
                             </td>
                             <td>
-                                <button class="layui-btn layui-btn-small layui-btn-danger"><i class="layui-icon">&#xe640;</i></button>
+                                <button class="layui-btn layui-btn-small layui-btn-danger" onclick="layui.datalist.editData(${blog.blogId})"><i class="layui-icon">&#xe640;</i></button>
                             </td>
                         </tr>
                     </c:forEach>

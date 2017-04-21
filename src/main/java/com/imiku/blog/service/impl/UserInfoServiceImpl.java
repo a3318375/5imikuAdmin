@@ -4,12 +4,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imiku.blog.dao.UserInfoDao;
 import com.imiku.blog.model.UserInfo;
+import com.imiku.blog.model.UserRole;
 import com.imiku.blog.service.UserInfoService;
+import com.imiku.blog.utils.PasswordHelper;
 import com.imiku.blog.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,7 +47,18 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public void addUser(UserVo userVo) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setLocked("0");
+        userInfo.setCreateDate(new Date());
+        userInfo.setAccountName(userVo.getAccount());
+        userInfo.setDeleteStatus(0);
+        userInfo.setDescription("test");
+        userInfo.setPassword(userVo.getPassword());
+        userInfo.setCredentialsSalt("");
+        userInfo.setUserName(userVo.getUserName());
 
+        PasswordHelper.encryptPassword(userInfo);
+        userInfoDao.insert(userInfo);
     }
 
     @Override

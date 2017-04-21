@@ -24,6 +24,6 @@ public class RoleInfoServiceImpl implements RoleInfoService {
 
     @Override
     public List<RoleInfo> findAllRoles() {
-        return null;
+        return roleInfoDao.findAllRoles();
     }
 }

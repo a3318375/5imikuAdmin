@@ -44,7 +44,7 @@ public class UserController {
         return "user_add";
     }
 
-    @RequestMapping("/addUser")
+    @RequestMapping("/add")
     public String addUser(UserVo userVo) throws Exception {
         userInfoService.addUser(userVo);
         return "redirect:/user/list?pageNum=1";

@@ -21,6 +21,12 @@
     -->
     role_id, state, role_name, role_key, description
   </sql>
+  <select id="findAllRoles" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from role_info
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated

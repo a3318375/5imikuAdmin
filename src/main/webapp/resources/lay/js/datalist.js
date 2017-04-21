@@ -20,6 +20,9 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         $("#context").val(htmls);
         $("#myfrom").submit();
     });
+    form.on('submit(addUser)', function (data) {
+        $("#myfrom").submit();
+    });
     layui.upload({
         url: allpath + '/uploadFile/cover'
         ,success: function(res){
@@ -54,7 +57,7 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         //模拟数据
         var data = new Array();
         for (var i = 0; i < 30; i++) {
-            data.push({ id: i + 1, time: '2017-3-26 15:56', title: '不落阁后台模板源码分享', author: 'Absolutely', category: 'Web前端' });
+            data.push({ id: i + 1, time: '2017-3-26 15:56', title: '绮梦楼后台模板源码分享', author: 'Absolutely', category: 'Web前端' });
         }
         //模拟数据加载
         setTimeout(function () {
@@ -157,7 +160,6 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         }else{
             lock = 1;
         }
-
         $.ajax({
             url: allpath + '/user/updateLock',
             data:{
@@ -218,6 +220,14 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         }, 500);
     });
 
+    $('#toAddUser').click(function () {
+        var index = layer.load(1);
+        setTimeout(function () {
+            layer.close(index);
+            location.href = allpath + "/user/toAddUser"
+        }, 500);
+    });
+
     //输出接口，主要是两个函数，一个删除一个编辑
     var datalist = {
         deleteData: function (id) {
@@ -240,7 +250,7 @@ function addAnnouncement() {
     var index = layer.load(1);
     var allpath = $("#allpath").val();
     layer.close(index);
-    var html = '<form class="layui-form" id="myform">' +
+    var html = '<form class="layui-form" id="myform" action="' + allpath + '/notice/add">' +
         '<div class="layui-form-item"><label class="layui-form-label">内容</label><div class="layui-input-block">' +
         '<input type="hidden" name="context" id="context"><textarea id="demo" style="display: none;width: 538;"></textarea>' +
         '</div></div><div class="layui-form-item"><label class="layui-form-label">公告级别</label>' +
@@ -251,7 +261,7 @@ function addAnnouncement() {
         '</div></div><div class="layui-form-item"><div class="layui-input-block">' +
         '<button class="layui-btn" lay-submit="" lay-filter="formAnnouncement">立即提交</button>' +
         '</div></div></form>' +
-        "<script>layui.use(['layedit','form'], function(){var layedit = layui.layedit;layedit.build('demo',{height:150,tool: ['strong','italic','underline','del','|','left','center','right','link','unlink','face']});layui.form().on('submit(formAnnouncement)', function (data) {var htmls = layedit.getContent(index);$('#context').val(htmls);alert($('#myfrom').serialize());});});</script>";
+        '<script src="' + allpath + '/resources/lay/js/notice.js"></script>';
     parent.layer.open({
         type: 1,
         area: ['700px', '400px'],

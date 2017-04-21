@@ -13,7 +13,6 @@ layui.define(['element', 'layer', 'util', 'pagesize', 'form'], function (exports
     var util = layui.util;
     var form = layui.form();
     //form.render();
-
     //快捷菜单开关
     $('span.sys-title').click(function (e) {
         e.stopPropagation();    //阻止事件冒泡

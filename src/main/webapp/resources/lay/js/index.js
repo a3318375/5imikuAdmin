@@ -102,7 +102,7 @@ layui.define(['element', 'layer', 'form'], function (exports) {
             skin: 'pm-layer-login',
             content: loginHtml
         });
-        layui.form().render('checkbox');
+        layui.form().render();
     }
 
     exports('index', {});

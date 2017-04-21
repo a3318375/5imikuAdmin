@@ -3,6 +3,7 @@ package com.imiku.blog.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.imiku.blog.model.UserInfo;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -12,11 +13,11 @@ public class PasswordHelper {
 	private static String algorithmName = "SHA-256";
 	private static int hashIterations = 2;
 
-	public static void encryptPassword(Map<String,Object> map) {
+	public static void encryptPassword(UserInfo userInfo) {
 		String salt=randomNumberGenerator.nextBytes().toHex();
-		map.put("credentialsSalt", salt);
-		String newPassword = new SimpleHash(algorithmName, map.get("password"), ByteSource.Util.bytes(map.get("accountName")+salt), hashIterations).toHex();
-		map.put("password", newPassword); 
+		userInfo.setCredentialsSalt(salt);
+		String newPassword = new SimpleHash(algorithmName, userInfo.getPassword(), ByteSource.Util.bytes(userInfo.getAccountName() + salt), hashIterations).toHex();
+		userInfo.setPassword(newPassword);
 	}
 	
 	public static String getPassword(String accountName,String password,String salt) {

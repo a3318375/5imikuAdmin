@@ -61,6 +61,7 @@
     </style>
 </head>
 <body>
+<input type="hidden" id="allpath" value="${pageContext.request.contextPath}"/>
     <fieldset id="dataConsole" class="layui-elem-field layui-field-title"  style="display:none;">
         <legend>控制台</legend>
         <div class="layui-field-box">
@@ -71,7 +72,7 @@
                             <input type="hidden" id="pages" name="pages" value="${page.pages}" />
                             <div class="layui-inline">
                                 <label class="layui-form-label">分类</label>
-                                <div class="layui-input-inline">000000000
+                                <div class="layui-input-inline">
                                     <select name="blogType">
                                         <option value=''></option>
                                         <c:forEach items="${rlist}" var = "role">
@@ -89,7 +90,7 @@
                             </div>
                         <div class="layui-inline">
                             <div class="layui-input-inline" style="width:auto">
-                                <a id="addArticle" class="layui-btn layui-btn-normal">新增用户</a>
+                                <a id="toAddUser" class="layui-btn layui-btn-normal">新增用户</a>
                             </div>
                         </div>
                     </div>
