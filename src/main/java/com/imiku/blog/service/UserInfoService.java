@@ -20,4 +20,10 @@ public interface UserInfoService {
     void addUser(UserVo userVo);
 
     void updateLock(UserVo userVo);
+
+    UserInfo getById(Integer userId);
+
+    void deleteById(Integer userId);
+
+    void update(UserVo userVo);
 }

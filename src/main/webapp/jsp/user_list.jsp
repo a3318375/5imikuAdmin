@@ -131,7 +131,7 @@
                             <td><fmt:formatDate value="${user.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                             <td>${user.userName}</td>
                             <td>${user.accountName}</td>
-                            <td>管理员</td>
+                            <td>${user.roleName}</td>
                             <td>
                                 <form class="layui-form" action="">
                                     <div class="layui-form-item" style="margin:0;">
@@ -140,10 +140,10 @@
                                 </form>
                             </td>
                             <td>
-                                <button class="layui-btn layui-btn-small layui-btn-normal"><i class="layui-icon">&#xe642;</i></button>
+                                <button class="layui-btn layui-btn-small layui-btn-normal" onclick="layui.userlist.editData(${user.userId})"><i class="layui-icon">&#xe642;</i></button>
                             </td>
                             <td>
-                                <button class="layui-btn layui-btn-small layui-btn-danger"><i class="layui-icon">&#xe640;</i></button>
+                                <button class="layui-btn layui-btn-small layui-btn-danger" onclick="layui.userlist.deleteData(${user.userId})"><i class="layui-icon">&#xe640;</i></button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -159,7 +159,7 @@
     <script type="text/javascript">
         layui.config({
             base: '${pageContext.request.contextPath}/resources/lay/js/'
-        }).use('datalist');
-    </script>
+        }).use('userlist');
+</script>
 </body>
 </html>

@@ -44,6 +44,15 @@ public class UserController {
         return "user_add";
     }
 
+    @RequestMapping("/toUpdateUser")
+    public String toUpdateUser(UserVo userVo,Model model) throws Exception {
+        UserInfo userInfo = userInfoService.getById(userVo.getUserId());
+        List<RoleInfo> rlist = roleInfoService.findAllRoles();
+        model.addAttribute("rlist",rlist);
+        model.addAttribute("user",userInfo);
+        return "user_update";
+    }
+
     @RequestMapping("/add")
     public String addUser(UserVo userVo) throws Exception {
         userInfoService.addUser(userVo);
@@ -56,5 +65,17 @@ public class UserController {
     public boolean updateLock(UserVo userVo) throws Exception {
         userInfoService.updateLock(userVo);
         return true;
+    }
+
+    @RequestMapping("/delete")
+    public String delete(UserVo userVo) throws Exception {
+        userInfoService.deleteById(userVo.getUserId());
+        return "redirect:/user/list?pageNum=1";
+    }
+
+    @RequestMapping("/update")
+    public String update(UserVo userVo) throws Exception {
+        userInfoService.update(userVo);
+        return "redirect:/user/list?pageNum=1";
     }
 }

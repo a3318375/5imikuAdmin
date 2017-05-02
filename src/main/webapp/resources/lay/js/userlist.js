@@ -151,6 +151,36 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
         });
     });
 
+    form.on('switch(lock)', function (data) {
+        var index = layer.load(1);
+        var userId = data.elem.value;
+        var lock;
+        if(data.elem.checked){
+            lock = 0;
+        }else{
+            lock = 1;
+        }
+        $.ajax({
+            url: allpath + '/user/updateLock',
+            data:{
+                userId:userId,
+                lock:lock
+            },
+            success:function(data){
+                if(data){
+                    layer.close(index);
+                    layer.msg('操作成功');
+                }else{
+                    data.elem.checked = false;
+                    layer.msg('操作失败，返回原来状态');
+                }
+            },
+            error:function(){
+                data.elem.checked = false;
+            }
+        });
+    });
+
     //监听推荐CheckBox
     form.on('checkbox(recommend)', function (data) {
         var index = layer.load(1);
@@ -199,21 +229,21 @@ layui.define(['laypage', 'layer', 'form', 'pagesize','layedit','upload'], functi
     });
 
     //输出接口，主要是两个函数，一个删除一个编辑
-    var datalist = {
+    var userlist = {
         deleteData: function (id) {
             layer.confirm('确定删除1？', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
-                location.href =  allpath + '/blog/deleteBlog?blogId=' + id;
+                location.href =  allpath + '/user/delete?userId=' + id;
             });
         },
         editData: function (id) {
-            location.href =  allpath + '/blog/toUpdateBlog?blogId=' + id;
+            location.href =  allpath + '/user/toUpdateUser?userId=' + id;
         }
     };
 
 
-    exports('datalist', datalist);
+    exports('userlist', userlist);
 });
 function addAnnouncement() {
     var $ = layui.jquery;

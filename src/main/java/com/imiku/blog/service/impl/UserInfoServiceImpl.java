@@ -3,6 +3,7 @@ package com.imiku.blog.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imiku.blog.dao.UserInfoDao;
+import com.imiku.blog.dao.UserRoleDao;
 import com.imiku.blog.model.UserInfo;
 import com.imiku.blog.model.UserRole;
 import com.imiku.blog.service.UserInfoService;
@@ -23,6 +24,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserInfoDao userInfoDao;
+
+    @Autowired
+    private UserRoleDao userRoleDao;
 
     @Override
     public List<UserInfo> findByNames(String username) {
@@ -59,6 +63,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         PasswordHelper.encryptPassword(userInfo);
         userInfoDao.insert(userInfo);
+
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userInfo.getUserId());
+        userRole.setRoleId(userVo.getRoleId());
+        userRoleDao.insert(userRole);
     }
 
     @Override
@@ -66,5 +75,25 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo userInfo = userInfoDao.selectByPrimaryKey(userVo.getUserId());
         userInfo.setLocked(userVo.getLock());
         userInfoDao.updateByPrimaryKey(userInfo);
+    }
+
+    @Override
+    public UserInfo getById(Integer userId) {
+        return userInfoDao.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public void deleteById(Integer userId) {
+        userInfoDao.deleteByPrimaryKey(userId);
+    }
+
+    @Override
+    public void update(UserVo userVo) {
+        UserInfo userInfo = userInfoDao.selectByPrimaryKey(userVo.getUserId());
+        userInfo.setUserName(userVo.getUserName());
+        userInfo.setPassword(userVo.getPassword());
+
+        PasswordHelper.encryptPassword(userInfo);
+        userInfoDao.updateByPrimaryKeySelective(userInfo);
     }
 }
